@@ -57,7 +57,7 @@
       program sterling
       use timings
       implicit none
-      integer :: i
+      integer :: i,j
       real*8,dimension(100) :: res,res1,res2,res3,res4
       real*8,dimension(1:4) :: md,mad,rmsd
       real*8,parameter :: tpi = 8.0d0*atan(1.0d0)
