@@ -66,7 +66,11 @@
       allocate( timings_cpu(timings_max),timings_wall(timings_max) ) 
       call timing(1)
       do i = 1, 100
-         res(i) = logfactorial(i)
+c        res(i) = log(dble(factorial(i)))
+c        res(i) = logfactorial(i)
+c        res(i) = log(dble(product((/(j,j=1,i)/))))
+c        yeah, this one beats the three above about a factor of two
+         res(i) = sum( (/(log(dble(j)),j=1,i)/))
       enddo
       call timing(2)
       do i = 1, 100
@@ -105,6 +109,15 @@
       call prtimings
       call terminate(0)
       contains
+      pure recursive function factorial(n) result(res)
+      integer,intent(in) :: n
+      integer :: res
+      if (n.eq.0) then
+         res = 1
+      else
+         res = n*factorial(n-1)
+      endif
+      end function factorial
       pure recursive function logfactorial(n) result(res)
       integer,intent(in) :: n
       real*8 :: res
